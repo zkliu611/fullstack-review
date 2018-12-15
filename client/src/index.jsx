@@ -4,6 +4,7 @@ import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -17,11 +18,9 @@ class App extends React.Component {
     console.log(`${term} was searched`);
     $.ajax({
       method: 'POST',
-      url: https://api.github.com,
-      data: {${term} }
-      .done(function(msg) => {
-        console.log(msg);
-      })
+      url: '/repos',
+      data: {username: `${term}`},
+      success: data => {console.log(data)},
     })
   }
 
