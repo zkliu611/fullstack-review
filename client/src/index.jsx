@@ -11,7 +11,6 @@ class App extends React.Component {
     this.state = { 
       repos: []
     }
-
   }
 
   search (term) {
@@ -21,6 +20,16 @@ class App extends React.Component {
       url: '/repos',
       data: {username: `${term}`},
       success: data => {console.log(data)},
+    })
+  }
+
+  componentDidMount() {
+    $.ajax({
+      url: 'http://localhost:1128/repos',
+      method: 'GET',
+      contentType: 'text/plain',
+      success: (data) => {console.log(data)},
+      error: (error) => {console.log(error)}
     })
   }
 

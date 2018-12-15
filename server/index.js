@@ -9,13 +9,10 @@ app.use(bodyParser.json());
 
 app.post('/repos', function (req, res) {
   console.log('serving post request');
-  console.log(req.body.username);
   helpers.getReposByUsername(req.body.username, (data) => {
-    console.log(data);
-
+    let repos = JSON.parse(data);
+    console.log(repos[0])
   })
-
-
   res.status(201).end()
 });
 
