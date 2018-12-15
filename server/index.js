@@ -28,7 +28,14 @@ app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
   console.log('serving get request');
-  res.status(200).send('hello world')
+  db.find((err, repos) => {
+    if (err) {
+      res.status(500).send({ error: 'something blew up' });
+    } else{
+      let top25 = repos.slice(0, 25);
+      res.status(200).send(JSON.stringify(top25));
+    }
+  });
 });
 
 let port = 1128;

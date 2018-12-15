@@ -11,6 +11,7 @@ class App extends React.Component {
     this.state = { 
       repos: []
     }
+    this.get.bind(this);
   }
 
   search (term) {
@@ -19,18 +20,31 @@ class App extends React.Component {
       method: 'POST',
       url: '/repos',
       data: {username: `${term}`},
-      success: data => {console.log(data)},
+      success: data => {
+        console.log(data);
+        console.log(this)
+        this.get();
+      },
     })
   }
 
-  componentDidMount() {
+  get() {
     $.ajax({
       url: 'http://localhost:1128/repos',
       method: 'GET',
       contentType: 'text/plain',
-      success: (data) => {console.log(data)}, //write data to state
+      success: (data) => {
+        let repos = JSON.parse(data);
+        this.setState({
+          repos: repos
+        });
+      }, 
       error: (error) => {console.log(error)}
     })
+  }
+
+  componentDidMount() {
+    this.get();
   }
 
   render () {
