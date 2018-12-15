@@ -28,7 +28,7 @@ class App extends React.Component {
       url: 'http://localhost:1128/repos',
       method: 'GET',
       contentType: 'text/plain',
-      success: (data) => {console.log(data)},
+      success: (data) => {console.log(data)}, //write data to state
       error: (error) => {console.log(error)}
     })
   }

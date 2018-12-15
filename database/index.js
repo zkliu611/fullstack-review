@@ -27,17 +27,18 @@ var save = (data, callback) => {
   // TODO: Your code here
   // This function should save a repo or repos to
   // the MongoDB
-  
+  console.log(Object.keys(data[0]));
   for (let i = 0; i < data.length; i++) {
     let repo = new Repo({
       id: data[i].id,
       owner: data[i].owner.login,
-      description: data.description,
+      name: data[i].name,
+      description: data[i].description,
       url: data[i].html_url,
-      createdAt: data.created_at,
-      updatedAt: data.updated_at,
-      forks: data.forks,
-      watch: data.watchers,
+      createdAt: data[i].created_at,
+      updatedAt: data[i].updated_at,
+      forks: data[i].forks,
+      watch: data[i].watchers,
     })
 
     repo.save(function(error) {
