@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost//27017');
+mongoose.connect('mongodb://localhost/fetcher', (err) => {
+  if (err) return console.log('Error: no connection to database.');
+  console.log('Connected to database!')
+});
 
 var db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {console.log('CONNECTED')});
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function() {console.log('CONNECTED')});
 
 var repoSchema = mongoose.Schema({
   id: {type: Number, unique: true},
@@ -41,7 +44,8 @@ var save = (data, callback) => {
       if (error) {
         callback(error)
       } else {
-        console.log('repo saved!')
+        console.log('repo saved!');
+        callback();
       }
     })
   }

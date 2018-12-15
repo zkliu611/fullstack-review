@@ -2,6 +2,7 @@ const express = require('express');
 let app = express();
 var bodyParser = require('body-parser');
 var helpers = require('../helpers/github.js')
+var db = require('../database')
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -11,9 +12,16 @@ app.post('/repos', function (req, res) {
   console.log('serving post request');
   helpers.getReposByUsername(req.body.username, (data) => {
     let repos = JSON.parse(data);
-    console.log(repos[0])
-  })
-  res.status(201).end()
+    db.save(repos, (error) => {
+      if (error) {
+        console.log(error)
+        res.status(404).end();
+      } else {
+        console.log('success writting data!')
+        res.status(201).end();
+      }
+    })
+  });
 });
 
 app.get('/repos', function (req, res) {
